@@ -5,7 +5,6 @@
 
 typedef struct _offset_list {
   uint64_t PMAP_STORE;
-  uint64_t HV_BSS_OFF;        // Needed for 1.xx and 2.xx
   uint64_t HV_VCPU;           // Needed for 1.xx and 2.xx
   uint64_t HV_VCPU_CPUID;     // Needed for 1.xx and 2.xx
   uint64_t HV_VCPU_ARRAY_OFF; // Needed for 1.xx and 2.xx
