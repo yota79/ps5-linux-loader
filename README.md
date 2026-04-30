@@ -177,6 +177,7 @@ If the LED is white, but you still have a blackscreen then:
 
 - Try different monitors or capture cards, ideally with different resolutions. Currently, some monitors have issues.
 - Try setting `amdgpu.force_1080p=1` in `cmdline.txt` in the FAT32 partition of the USB drive.
+- Try removing `video=DP-1:1920x1080@60` line in cmdline.txt.
 
 If none of this helps, please report the issue in our [Discord server](https://discord.gg/PeMGVB7BAm) and provide your EDID information.
 
@@ -267,7 +268,7 @@ Always turn on fan when your turn on boost, as this is what the official PS5 OS 
 - Q: Does the DualSense controller work?
   - A: Via a Bluetooth dongle. Built-in Bluetooth is not yet supported.
 - Q: What resolutions and refresh rates are supported?
-  - A: So far only 1080p, 1440p and 2160p at 60Hz. 120Hz or 30Hz may be added in the future.
+  - A: 1080p, 1440p and 2160p at 60Hz are broadly supported. 1440p@120Hz has been the only confirmed working on the DELL S3225QC yet. 120Hz or 30Hz may be added in the future.
 
 
 ## Tips and tricks
@@ -275,7 +276,9 @@ Always turn on fan when your turn on boost, as this is what the official PS5 OS 
 - You can adjust the kernel cmdline in `cmdline.txt` in the FAT32 partition.
 - You can adjust the VRAM size in `vram.txt` in the FAT32 partition. By default, it uses 512MB (0x20000000) which enables [Dynamic VRAM allocation](https://elektricm.github.io/amd-bc250-docs/bios/flashing/#why-flash-the-bios).
 - Monitor hotswap may work, but it will not change resolution automatically.
-
+- Some monitors have a black screen if a video=DP-1: parameter is set in `cmdline.txt`. Confirmed working without `video=DP-1:1920x1080@60` on:
+  - MSI MAG274Q QD E2, DELL S2721DGF, DELL U2515H (1440p@60Hz)
+  - Possibly also: LG 27GL850, Lenovo Legion Y27q, ViewSonic Elite XG270QG
 Many configurations, tips and tricks from the [AMD BC250 Documentation](https://elektricm.github.io/amd-bc250-docs/) also apply to PS5.
 
 ## Bugs
