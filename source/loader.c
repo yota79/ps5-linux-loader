@@ -228,9 +228,8 @@ int fetch_linux(struct linux_info *info) {
     return -1;
   }
 
-  if (resolve_device_firmwares(&initrd, &initrd_size) < 0) {
-    notify("Something went wrong while resolving device firmwares - Aborting\n");
-    return -1;
+  if (dump_device_firmwares(initrd_path) < 0) {
+    notify("Something went wrong while dumping device firmwares - Continuing\n");
   }
 
   size_t vram_size;

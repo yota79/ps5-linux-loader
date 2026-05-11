@@ -1,8 +1,6 @@
 #ifndef FIRMWARE_H
 #define FIRMWARE_H
 
-#include <stddef.h>
-
-int resolve_device_firmwares(void **initrd, size_t *initrd_size);
+int dump_device_firmwares(const char *boot_file_path);
 
 #endif
