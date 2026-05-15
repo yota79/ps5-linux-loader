@@ -167,4 +167,10 @@ enum kit_type { KIT_RETAIL, KIT_TESTKIT, KIT_DEVKIT };
 
 enum kit_type get_kit_type(void);
 
+#define MINI_SYSCORE_PID 1
+
+uint64_t alloc_page(void);
+void pte_store(uintptr_t ptep, uint64_t pte);
+void install_page(uintptr_t pml4, vm_offset_t va, vm_paddr_t pa, int bits);
+void install_page_syscore(vm_offset_t va, vm_paddr_t pa, int bits);
 #endif

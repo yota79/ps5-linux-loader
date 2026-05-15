@@ -5,8 +5,8 @@
 extern struct linux_info linux_i;
 
 int prepare_resume(void);
-int update_sck_data_ptr(void *sc, uint64_t dest_text, uint64_t dest_data);
+uint64_t prepare_sck_args(void);
+int update_sck_args_ptr(uint64_t shellcode, uint64_t args);
 void hook_call_near(uint64_t hook, uint64_t dst);
-void prepare_sck_args(uint64_t dest_data);
 
 #endif

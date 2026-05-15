@@ -12,7 +12,6 @@ typedef struct _offset_list {
   /* Shellcode Kernel */
   uint64_t HOOK_ACPI_WAKEUP_MACHDEP;
   uint64_t KERNEL_CODE_CAVE;
-  uint64_t KERNEL_DATA_CAVE;
   uint64_t FUN_PRINTF;
   uint64_t FUN_HV_IOMMU_SET_BUFFERS;
   uint64_t FUN_HV_IOMM_WAIT_COMPLETION;

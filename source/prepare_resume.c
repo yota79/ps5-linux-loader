@@ -1,6 +1,7 @@
 #include "prepare_resume.h"
 #include "../shellcode_kernel/shellcode_kernel.h"
 #include "../shellcode_kernel/shellcode_kernel_args.h"
+#include "config.h"
 #include "iommu.h"
 #include "offsets.h"
 #include "utils.h"
@@ -14,21 +15,14 @@ int prepare_resume(void) {
     return -1;
   }
 
-  if (env_offset.KERNEL_DATA_CAVE == 0) {
-    printf("Error: missing data cave offset\n");
-    return -1;
-  }
-
-  uint64_t dest_text = ktext + env_offset.KERNEL_CODE_CAVE;
-  uint64_t dest_data = ktext + env_offset.KERNEL_DATA_CAVE;
-
-  kwrite_large(dest_text, shellcode_kernel_bin, shellcode_kernel_bin_len);
-  prepare_sck_args(dest_data);
-
-  if (update_sck_data_ptr(shellcode_kernel_bin, dest_text, dest_data))
+  uint64_t args_va = prepare_sck_args();
+  if (update_sck_args_ptr((uint64_t)shellcode_kernel_bin, args_va))
     return -1;
 
-  hook_call_near(ktext + env_offset.HOOK_ACPI_WAKEUP_MACHDEP, dest_text);
+  uint64_t sck_va = ktext + env_offset.KERNEL_CODE_CAVE;
+  kwrite_large(sck_va, shellcode_kernel_bin, shellcode_kernel_bin_len);
+
+  hook_call_near(ktext + env_offset.HOOK_ACPI_WAKEUP_MACHDEP, sck_va);
 
   kwrite8(ktext + env_offset.KERNEL_DEBUG_PATCH, 0xC3);
   kwrite8(ktext + env_offset.KERNEL_CFI_CHECK, 0xC3);
@@ -36,11 +30,11 @@ int prepare_resume(void) {
   return 0;
 }
 
-int update_sck_data_ptr(void *sc, uint64_t dest_text, uint64_t dest_data) {
+int update_sck_args_ptr(uint64_t shellcode, uint64_t args) {
   // Find the address 0x11AA11AA11AA11AA used as marker
   int offset = -1;
-  for (int i = 0; i < 0x40; i++) {
-    if (*(uint64_t *)((uint64_t)sc + i) == 0x11AA11AA11AA11AA) {
+  for (uint64_t i = 0; i < 0x40; i++) {
+    if (*(uint64_t *)(shellcode + i) == 0x11AA11AA11AA11AA) {
       offset = i;
       break;
     }
@@ -49,7 +43,7 @@ int update_sck_data_ptr(void *sc, uint64_t dest_text, uint64_t dest_data) {
     notify("Could not find offset of args_ptr address - Aborting\n");
     return -1;
   }
-  kwrite64(dest_text + offset, dest_data);
+  *(uint64_t *)(shellcode + offset) = args;
   return 0;
 }
 
@@ -62,7 +56,7 @@ void hook_call_near(uint64_t hook, uint64_t dst) {
   DEBUG_PRINT("Instruction patched\n");
 }
 
-void prepare_sck_args(uint64_t dest_data) {
+uint64_t prepare_sck_args(void) {
   shellcode_kernel_args args;
   args.fw_version = fw;
   args.ktext = ktext;
@@ -94,5 +88,9 @@ void prepare_sck_args(uint64_t dest_data) {
 
   args.linux_info_va = linux_i.linux_info;
 
-  kernel_copyin(&args, dest_data, sizeof(args));
+  uint64_t args_cave = alloc_page();
+  kernel_copyin(&args, pa_to_dmap(args_cave), sizeof(args));
+  install_page_syscore(kernel_cave_arguments, args_cave, 0);
+
+  return kernel_cave_arguments;
 }
