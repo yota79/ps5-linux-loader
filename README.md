@@ -1,6 +1,6 @@
 # ps5-linux
 
-**ps5-linux** leverages patched HV vulnerabilities to transform your PS5 Phat console running **3.00-6.02 firmwares** into a highly capable Linux PC, unlocking its full hardware potential for desktop use. Powered by 8 CPU cores (16 threads) at **3.5 GHz** and a GPU at **2.23 GHz**, it provides enough performance to run Steam games and various emulators with impressive fluidity.
+**ps5-linux** leverages patched HV vulnerabilities to transform your **PS5 Phat and Slim** console running **3.00-7.61 firmwares** into a highly capable Linux PC, unlocking its full hardware potential for desktop use. Powered by 8 CPU cores (16 threads) at **3.5 GHz** and a GPU at **2.23 GHz**, it provides enough performance to run Steam games and various emulators with impressive fluidity.
 
 Features:
 
@@ -19,10 +19,11 @@ Features:
 - **4.00**, **4.02**, **4.03**, **4.50**, **4.51** with M.2 support
 - **5.00**, **5.02**, **5.10**, **5.50** with M.2 support
 - **6.00**, **6.02** with M.2 support
+- **7.61** with M.2 support
 
 Support for 1.xx and 2.xx firmwares may be added in the future, but we will not prioritize this effort.
 
-If you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5. Obviously you cannot downgrade.
+If you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5. **Obviously you cannot downgrade.**
 
 ## Hardwares
 
@@ -119,7 +120,7 @@ The front top Type-A port is USB 2.0 which is slower and thus not recommended.
 5. Go into PS5 advanced network settings and set primary DNS to your PCs IP address and leave secondary at `0.0.0.0`
 6. Go to user manual in settings and accept untrusted certificate prompt, run.
 
-#### Firmware 6.00-6.02
+#### Firmware 6.00-7.61
 
 1. Install Y2JB by following https://github.com/Gezine/Y2JB.
 2. Run kernel exploit: `python3 payload_sender.py $PS5IP 50000 payloads/lapse.js`
