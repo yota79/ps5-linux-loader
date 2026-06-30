@@ -15,7 +15,7 @@ Features:
 
 ## PS5 firmware
 
-*ps5-linux* is currently only supported on PS5 Phat on the following firmwares:
+*ps5-linux* is only supported on PS5 Phat and Slim on the following firmwares:
 
 - **3.00**, **3.10**, **3.20**, **3.21** without M.2 support
 - **4.00**, **4.02**, **4.03**, **4.50**, **4.51** with M.2 support
@@ -25,7 +25,7 @@ Features:
 
 Support for 1.xx and 2.xx firmwares may be added in the future, but we will not prioritize this effort.
 
-If you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5. **Obviously you cannot downgrade.**
+If you are on firmwares in-between or you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5. **Obviously you cannot downgrade.**
 
 ## Hardwares
 
@@ -199,7 +199,7 @@ Then, there are certain settings and commands we recommend doing:
    make
    ```
 
-7. Install the mwifiex driver for the internal Marvell WLAN chip (`40:00.7 Ethernet controller [0200]: Marvell Technology Group Ltd. Device [1b4b:2b56] (rev 02)`):
+7. If you have a Marvell WLAN chip (`lspci -nn` shows `40:00.7 Ethernet controller [0200]: Marvell Technology Group Ltd. Device [1b4b:2b56] (rev 02)`), then you can install the WLAN driver:
 
    ```bash
    git clone https://github.com/ps5-linux/ps5-linux-mwifiex
@@ -260,7 +260,7 @@ For any future ps5-linux updates, you can download the `.deb` or `.pkg.tar.zst` 
 
 ## FAQ
 
-- Q: Will higher >=6.50 firmwares be supported?
+- Q: Will higher >=8.00 firmwares be supported?
   - A: No.
 - Q: Why can I not use M.2 on 3.xx?
   - A: Because the PS5 fails to boot with it attached.
