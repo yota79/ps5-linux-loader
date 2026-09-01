@@ -85,6 +85,9 @@ int set_offsets(void) {
   case 0x0701:
     env_offset = off_0701;
     break;
+  case 0x070101:
+    env_offset = off_070101;
+    break;
   case 0x0720:
     env_offset = off_0720;
     break;
