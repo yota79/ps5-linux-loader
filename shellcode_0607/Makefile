@@ -8,7 +8,7 @@ LD      = ld
 OBJCOPY = objcopy
 endif
 CFLAGS  = -O2 -fno-stack-protector -ffreestanding -nostdlib -fcf-protection=none -mno-sse -mno-sse2 -m64
-LDFLAGS = -T linker.ld -Wl,--no-warn-rwx-segments
+LDFLAGS = -T linker.ld
 TARGET  = shellcode_0607.elf
 TEXT_BIN = shellcode_0607.bin
 dump = shellcode_0607.h
